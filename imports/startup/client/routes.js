@@ -11,3 +11,12 @@ FlowRouter.route('/', {
     BlazeLayout.render('homeLayout');
   }
 });
+
+FlowRouter.route('/test', {
+  name: 'test',
+  action() {
+    BlazeLayout.render('mainLayout', {
+      main: 'test'    // dynamic showing test templtes in main
+    });
+  }
+});
