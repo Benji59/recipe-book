@@ -8,7 +8,8 @@ import './recipeDetail.html';
 
 Template.recipeDetail.onCreated(function() {
   this.autorun(() => {
-    this.subscribe('recipes');
+    let id = FlowRouter.getParam('id');
+    this.subscribe('singleRecipes', id);
   });
 });
 
