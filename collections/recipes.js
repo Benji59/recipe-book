@@ -8,6 +8,15 @@ Recipes.allow({
   }
 });
 
+Ingredient = new SimpleSchema({
+  name: {
+    type: String
+  },
+  amount: { // string to deal with units
+    type: String,
+  }
+});
+
 Recipes.schema = new SimpleSchema({
   name: {
     type: String,
@@ -16,6 +25,17 @@ Recipes.schema = new SimpleSchema({
   desc: {
     type: String,
     label: "Description"
+  },
+  ingredients: {        // put a sub-schema in schema
+    type: [Ingredient]  // [] make it possbile to have several Ingredient
+  },
+  inMenu: {
+    type: Boolean,
+    defaultValue: false,
+    optional: true,
+    autoform: {
+      type: "hidden"
+    }
   },
   author: {
     type: String,
