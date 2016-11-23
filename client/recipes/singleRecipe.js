@@ -1,12 +1,14 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
+import { ReactiveVar } from 'meteor/reactive-var';
 
 import { Recipes } from '../../collections/recipes.js';
 
 import './singleRecipe.html';
 
 Template.singleRecipe.onCreated(function() {
+  this.editMode = new ReactiveVar(false);
   this.autorun(() => {
     this.subscribe('recipes');
   })
@@ -18,6 +20,9 @@ Template.singleRecipe.helpers({
   },
   updateRecipeId() {  // concise function will not lose "this" keywords
     return this._id;
+  },
+  editMode() {
+    return Template.instance().editMode.get();
   }
 });
 
@@ -28,8 +33,8 @@ Template.singleRecipe.events({
   'click .fa-trash'() {
     Meteor.call('deleteRecipe', this._id);
   },
-  'click .fa-pencil'() {
-    Session.set('editMode', !Session.get('editMode'));
+  'click .fa-pencil'(event, template) {
+    template.editMode.set(!template.editMode.get());
   }
 
 });
