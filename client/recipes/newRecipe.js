@@ -5,7 +5,7 @@ import { Recipes } from '../../collections/recipes.js';
 
 import './newRecipe.html';
 
-Meteor.subscribe('recipes'); 
+Meteor.subscribe('recipes');
 
 Template.NewRecipe.helpers({
   Recipes() {
