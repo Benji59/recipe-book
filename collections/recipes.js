@@ -1,9 +1,13 @@
+import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 
 export const Recipes = new Mongo.Collection('recipes');
 
 Recipes.allow({
   insert(userId, doc) {
+    return !!userId;
+  },
+  update(userId, doc) {
     return !!userId;
   }
 });
@@ -60,3 +64,17 @@ Recipes.schema = new SimpleSchema({
 });
 
 Recipes.attachSchema( Recipes.schema );
+
+// function
+Meteor.methods({
+  toggleMenuItem(id, currState) {
+    Recipes.update(id, {
+      $set: {
+        inMenu: !currState
+      }
+    });
+  },
+  deleteRecipe(id) {
+    Recipes.remove(id);
+  }
+});
